@@ -31,7 +31,7 @@ const classObj = computed(() => ({
 @import '@/styles/variables.module.scss';
 
 .app-wrapper {
-  background-color: red;
+
   @include clearfix;
   position: relative;
   height: 100%;

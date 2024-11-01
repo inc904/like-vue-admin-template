@@ -1,6 +1,7 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import Hamburger from '@/components/Hamburger/index.vue'
+import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import { useAppStore } from '@/store/index.js'
 const appStore = useAppStore()
 
@@ -15,9 +16,9 @@ const { sidebar, toggleSideBar } = appStore
 </script>
 
 <template>
-  <div>
+  <div class="navbar">
     <Hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-    nav bar
+    <breadcrumb class="breadcrumb-container" />
   </div>
 </template>
 

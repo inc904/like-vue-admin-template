@@ -7,17 +7,15 @@
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" placeholder="Username">
           <template #prefix>
-            <el-icon class="el-input__icon"><UserFilled /></el-icon>
+            <el-icon class="el-input__icon">
+              <UserFilled />
+            </el-icon>
           </template>
         </el-input>
       </el-form-item>
 
       <el-form-item prop="password">
-        <el-input
-          v-model="loginForm.password"
-          ref="passwordRef"
-          :type="passwordType"
-          placeholder="Password"
+        <el-input v-model="loginForm.password" ref="passwordRef" :type="passwordType" placeholder="Password"
           :prefix-icon="Lock">
           <template #suffix>
             <el-icon @click="showPw" class="el-input__icon cursor-pointer">
@@ -110,11 +108,13 @@ $cursor: #fff;
     border-radius: 5px;
     color: #454545;
   }
+
   .el-input {
     .el-input__wrapper {
       height: 47px;
       background: transparent;
     }
+
     input {
       background: transparent;
       border: 0px;
@@ -141,14 +141,16 @@ $dark_gray: #889aa4;
 $light_gray: #eee;
 
 .login-container {
-  min-height: 100%;
+  min-height: 100vh;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
+
   .login-form {
-    padding: 150px 35px 0;
+    padding: 350px 35px 0;
     margin: 0 auto;
   }
+
   .title-container {
     position: relative;
 

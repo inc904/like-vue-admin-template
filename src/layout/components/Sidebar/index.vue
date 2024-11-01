@@ -44,21 +44,6 @@ const showLogo = computed(() => {
   return sidebarLogo
 })
 
-
-let onlyOneChild = reactive({})
-const hasOneShowingChild = (children = [], parent) => {
-  const showingChildren = children.filter((child) => {
-    if (child.hidden) return false
-    onlyOneChild = child
-    return true
-  })
-  if (showingChildren.length === 1) return true
-  if (showingChildren.length === 0) {
-    onlyOneChild = { ...parent, path: '', noShowingChildren: true }
-    return true
-  }
-  return false
-}
 </script>
 
 <template>
@@ -67,7 +52,7 @@ const hasOneShowingChild = (children = [], parent) => {
     <el-scrollbar wrap-class="scrollbar-wrapper">
 
       <el-menu :default-active="activeMenu" :background-color="variables.menuBg" :text-color="variables.menuText"
-        class="el-menu-vertical-demo" text-color="#fff" @open="handleOpen" @close="handleClose">
+        class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
         <SidebarItem v-for="(route, index) in routes" :key="index" :route="route" :base-path="route.path" />
       </el-menu>
     </el-scrollbar>

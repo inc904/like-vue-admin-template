@@ -1,5 +1,5 @@
 <template>
-  <div>form</div>
+  <div class="app-container">form</div>
 </template>
 
 <script setup></script>

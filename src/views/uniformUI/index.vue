@@ -88,12 +88,12 @@ button {
 
 body {
     font-family: 'Hind', sans-serif;
-    background: #f2f2f2;
 }
 
 .root {
     display: flex;
     color: #000;
+    background: #f2f2f2;
 }
 
 // Header -------------

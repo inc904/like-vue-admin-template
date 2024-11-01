@@ -32,14 +32,14 @@ const routes = [
     children: [
       {
         path: 'table',
-        component: () => import('@/views/table/index.vue'),
         name: 'Table',
         meta: { title: 'Table', icon: 'table' },
+        component: () => import('@/views/table/index.vue'),
       },
       {
         path: 'tree',
-        component: () => import('@/views/tree/index.vue'),
         name: 'Tree',
+        component: () => import('@/views/tree/index.vue'),
         meta: { title: 'Tree', icon: 'tree' },
       },
     ],
@@ -47,26 +47,27 @@ const routes = [
   {
     path: '/form',
     component: Layout,
+    redirect: '/form/index',
     children: [
       {
         path: 'index',
         name: 'Form',
-        component: () => import('@/views/form/index.vue'),
         meta: { title: 'Form', icon: 'form' },
+        component: () => import('@/views/form/index.vue'),
       },
     ],
   },
   {
     path: '/login',
     component: () => import('@/views/login/index.vue'),
-    name: 'Form',
+    name: 'Login',
     meta: { title: 'Login Form', icon: 'form' },
   },
   {
     path: '/uniformUI',
     component: () => import('@/views/uniformUI/index.vue'),
     name: 'UniformUI',
-    meta: { title: 'Uniform UI viewport scaling demo', icon: 'form' },
+    meta: { title: 'Uniform UI', icon: 'form' },
   },
 ]
 export default routes

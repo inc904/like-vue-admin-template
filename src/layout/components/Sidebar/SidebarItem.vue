@@ -1,49 +1,41 @@
 <template>
-  <span>{{ hasOneShowingChild(item.children, item) ? 1 : 2 }}</span>
-  <div v-if="!item.hidden">
-    <template
-      v-if="
-        hasOneShowingChild(item.children, item) &&
-        (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
-        !item.alwaysShow
-      ">
-      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{ 'submenu-title-noDropdown': !isNest }">
-          <item :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)" :title="onlyOneChild.meta.title" />
-        </el-menu-item>
-      </app-link>
+  <!-- 有子菜单,且只有一个 子菜单 -->
+  <router-link v-if="hasOneShowingChild(route.children, route)" :to="resolvePath(onlyOneChild.path)"
+    :data="resolvePath(onlyOneChild.path)">
+    <el-menu-item :index="resolvePath(onlyOneChild.path)">
+      <el-icon><icon-menu /></el-icon>
+      <span :desc="resolvePath(onlyOneChild.path)">{{ onlyOneChild.meta.title }}</span>
+    </el-menu-item>
+  </router-link>
+
+
+  <!-- 有多个子菜单 或者 没有子菜单且自身是一个菜单 -->
+  <el-sub-menu v-else index="route.path">
+    <template #title>
+      <el-icon> <icon-menu /> </el-icon>
+      <span :desc="resolvePath(route.path)">{{ route.meta.title }}</span>
     </template>
-    <el-sub-menu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
-      <template slot="title">
-        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
-      </template>
-      <sidebar-item
-        v-for="child in item.children"
-        :key="child.path"
-        :is-nest="true"
-        :item="child"
-        :base-path="resolvePath(child.path)"
-        class="nest-menu" />
-    </el-sub-menu>
-  </div>
+    <!-- <el-menu-item v-for="(child, index) in route.children">{{ child.meta.title }}</el-menu-item> -->
+    <SidebarItem v-for="child in route.children" :key="child.path" :route="child"
+      :base-path="resolvePath(child.path)" />
+  </el-sub-menu>
+
 </template>
 
 <script setup>
-import { onMounted, ref, computed, registerRuntimeCompiler } from 'vue'
+import { ref } from 'vue'
+import {
+  Document,
+  Menu as IconMenu,
+  Location,
+  Setting,
+} from '@element-plus/icons-vue'
 import { isExternal } from '@/utils/validate.js'
-import Item from './Item.vue'
-import AppLink from './Link.vue'
-// import FixiOSBug from './FixiOSBug'
-const onlyOneChild = ref({})
+
 let props = defineProps({
-  // route object
-  item: {
+  route: {
     type: Object,
     required: true,
-  },
-  isNest: {
-    type: Boolean,
-    default: false,
   },
   basePath: {
     type: String,
@@ -51,30 +43,30 @@ let props = defineProps({
   },
 })
 
-const filterShowingChildren = (children) => {
-  return children.filter((item) => !item.hidden)
-}
 
-const hasOneShowChild = (item) => {
-  let showChildren = filterShowingChildren(item.children)
-  return showChildren.length ? true : false
-}
+const onlyOneChild = ref({})
+const hasOneShowingChild = (children = [], parent) => {
+  const showingChildren = children.filter((item) => {
+    if (item.hidden) {
+      return false;
+    } else {
+      onlyOneChild.value = item;
+      return true;
+    }
+  });
 
-const setOnlyOneChild = (children) => {
-  if (children.length === 1) {
-    onlyOneChild.value = children[0]
-  } else if (children.length === 0) {
-    onlyOneChild.value = { ...props.item, path: '', noShowingChildren: true }
+  if (showingChildren.length === 1) {
+    return true;
+  }
+
+  if (showingChildren.length === 0) {
+    onlyOneChild.value = { ...parent, path: '', noShowingChildren: true };
+    return true;
   }
 }
 
-const hasOneShowingChild = (children = [], parent) => {
-  const showingChildren = filterShowingChildren(children)
-  setOnlyOneChild(showingChildren)
-  return showingChildren.length <= 1
-}
-
 const resolvePath = (routePath) => {
+
   if (isExternal(routePath)) {
     return routePath
   }
@@ -88,15 +80,6 @@ const resolvePath = (routePath) => {
   return routePath
 }
 
-const shouldShowSingleChild = computed(() => {
-  return hasOneShowingChild(props.item.children, props.item)
-})
-
-onMounted(() => {
-  if (!props.item.hidden) {
-    hasOneShowingChild(props.item.children, props.item)
-  }
-})
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped></style>

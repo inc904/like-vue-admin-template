@@ -1,12 +1,16 @@
 <template>
   <!-- 有子菜单,且只有一个 子菜单 -->
-  <router-link v-if="hasOneShowingChild(route.children, route)" :to="resolvePath(onlyOneChild.path)"
-    :data="resolvePath(onlyOneChild.path)">
-    <el-menu-item :index="resolvePath(onlyOneChild.path)">
-      <el-icon><icon-menu /></el-icon>
-      <span :desc="resolvePath(onlyOneChild.path)">{{ onlyOneChild.meta.title }}</span>
-    </el-menu-item>
-  </router-link>
+
+
+  <el-menu-item v-if="hasOneShowingChild(route.children, route)" :to="resolvePath(onlyOneChild.path)"
+    :index="resolvePath(onlyOneChild.path)">
+    <!-- <router-link v-if="hasOneShowingChild(route.children, route)" :to="resolvePath(onlyOneChild.path)"
+      :data="resolvePath(onlyOneChild.path)"> -->
+    <el-icon><icon-menu /></el-icon>
+    <span :desc="resolvePath(onlyOneChild.path)">{{ onlyOneChild.meta.title }}</span>
+    <!-- </router-link> -->
+  </el-menu-item>
+
 
 
   <!-- 有多个子菜单 或者 没有子菜单且自身是一个菜单 -->

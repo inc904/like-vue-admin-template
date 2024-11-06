@@ -1,6 +1,6 @@
 <template>
   <div class="red">DashBoard</div>
-  <p className="text-3xl font-bold underline">Hello world!</p>
+  <p class="text-3xl font-bold underline">Hello world!</p>
   <el-button type="primary">我是 ElButton</el-button>
 </template>
 

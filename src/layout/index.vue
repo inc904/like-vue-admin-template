@@ -18,9 +18,7 @@ const classObj = computed(() => ({
   <div :class="classObj" class="app-wrapper">
     <Sidebar class="sidebar-container" />
     <div class="main-container">
-      <div>
-        <Navbar></Navbar>
-      </div>
+      <Navbar></Navbar>
       <AppMain />
     </div>
   </div>
@@ -63,7 +61,7 @@ const classObj = computed(() => ({
 }
 
 .hideSidebar .fixed-header {
-  width: calc(100% - 54px);
+  // width: calc(100% - 54px);
 }
 
 .mobile .fixed-header {
